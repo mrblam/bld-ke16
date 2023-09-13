@@ -20,13 +20,13 @@ uint8_t DRV_FLASH_SetAddress(uint32_t address){
     return 0;
 }
 uint8_t DRV_FLASH_PrepareDATA(uint8_t* data){
-    HAL_FLASH_FTFA_FCCOB4_SetCMD(*data);
-    data++;
-    HAL_FLASH_FTFA_FCCOB5_SetCMD(*data);
+    HAL_FLASH_FTFA_FCCOB7_SetCMD(*data);
     data++;
     HAL_FLASH_FTFA_FCCOB6_SetCMD(*data);
     data++;
-    HAL_FLASH_FTFA_FCCOB7_SetCMD(*data);
+    HAL_FLASH_FTFA_FCCOB5_SetCMD(*data);
+    data++;
+    HAL_FLASH_FTFA_FCCOB4_SetCMD(*data);
     data++;
     return 0;
 }

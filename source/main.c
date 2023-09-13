@@ -84,14 +84,21 @@ int main(void) {
     DRV_GPIO_LED_Init(RED_LED);
     DRV_GPIO_LED_Init(GREEN_LED);
     DRV_GPIO_LED_Init(BLUE_LED);
+    DRV_GPIO_LED_Control(RED_LED,ON);
     DRV_GPIO_SW_Init(SW3);
     DRV_UART_Init(UART0,&g_config);
     DRV_UART_ReceivedNonBlocking(UART0,g_rx_buff,g_rx_length);
     while(1) {
+        if(DRV_GPIO_SW_ReadState(SW3)){
+            DRV_GPIO_LED_Control(RED_LED,OFF);
+            DRV_GPIO_LED_Control(GREEN_LED,ON);
+        }
         if(1){
+            DRV_GPIO_LED_Control(RED_LED,OFF);
+            DRV_GPIO_LED_Control(BLUE_LED,ON);
             boot_process();
         }else{
-            jump_to_app(0x00A000);
+//            jump_to_app(0x00A000);
         }
     }
     return 0 ;

@@ -55,8 +55,8 @@ status DRV_UART_Init(UART_Instance uart_instance,uart_config* config){
     HAL_PORT_PCR_MUX_Write(PortB, PIN0, ALT2);
     HAL_PORT_PCR_MUX_Write(PortB, PIN1, ALT2);
     /*BAUD*/
-    HAL_UART_BAUD_SBR_Write(uart_instance, 13);//312
-    HAL_UART_BAUD_OSR_Write(uart_instance, 31);//15
+    HAL_UART_BAUD_SBR_Write(uart_instance, 312);//312//13
+    HAL_UART_BAUD_OSR_Write(uart_instance, 15);//15//31
     /*CTRL*/
     HAL_UART_CTRL_RE_Write(uart_instance, config->enableRX);
     HAL_UART_CTRL_TE_Write(uart_instance, config->enableTX);

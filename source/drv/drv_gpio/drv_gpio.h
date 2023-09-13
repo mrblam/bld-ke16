@@ -24,6 +24,8 @@ typedef enum SW_STATE {
 typedef void (*call_back)(void);
 /******************************************/
 uint8_t DRV_GPIO_LED_Init(LED_COLOR pin);
+uint8_t DRV_GPIO_LED_Control(LED_COLOR pin,uint8_t mode);
 uint8_t DRV_GPIO_SW_Init(BUTTON pin);
+uint8_t DRV_GPIO_SW_ReadState(BUTTON pin);
 uint8_t DRV_GPIO_register_interrup(call_back func_cb);
 #endif /* DRV_DRV_GPIO_DRV_GPIO_H_ */

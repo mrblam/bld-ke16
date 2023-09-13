@@ -51,7 +51,7 @@ int8_t HAL_GPIO_PDOR_Write(uint8_t instance,uint8_t pin, uint8_t mode);
  *        - 0: corresponding pin input low-logic level.
  *        - 1: corresponding pin input high-logic level.
  */
-uint32_t HAL_GPIO_PDIR_Read(uint8_t instance,uint8_t pin, uint8_t mode);
+uint32_t HAL_GPIO_PDIR_Read(uint8_t instance,uint8_t pin);
 
 /*
  * @brief Reverses the current output logic of the GPIO pins.
