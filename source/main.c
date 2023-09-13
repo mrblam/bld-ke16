@@ -12,6 +12,7 @@
 #include "drv/drv_flash/drv_flash.h"
 #include "app/app_queue/app_queue.h"
 #include "app/app_srec/app_srec.h"
+#include "drv/drv_gpio/drv_gpio.h"
 /*************************************************/
 void UART0_IRQHandler_Callback(void);
 /*************************************************/
@@ -35,8 +36,12 @@ uart_config     g_config = {
         .tx_call_back = NULL,
         .error_call_back =NULL,
 };
+
 typedef void (*fnc_ptr)(void);
 /*************************************************/
+void BUTTON_IRQHandler_Callback(void){
+
+}
 void UART0_IRQHandler_Callback(void){
     g_is_new_line = true;
     s_line++;
@@ -57,7 +62,6 @@ uint8_t boot_process(void)
                 APP_QUEUE_EnQueue(&queue, g_rx_buff);
             }
         g_is_new_line = false;
-        g_is_new_line = false;
     }
     if(queue.level == 1){
         strcpy((char*)buff, (char*)APP_QUEUE_DeQueue(&queue));
@@ -75,9 +79,11 @@ uint8_t boot_process(void)
     return 0;
 }
 int main(void) {
-    APP_QUEUE_Init(&queue);
-    DRV_UART_Init(UART0,&g_config);
     g_rx_length = sizeof(g_rx_buff);
+    APP_QUEUE_Init(&queue);
+    DRV_GPIO_LED_Init(RED_LED);
+    DRV_GPIO_SW_Init(SW3);
+    DRV_UART_Init(UART0,&g_config);
     DRV_UART_ReceivedNonBlocking(UART0,g_rx_buff,g_rx_length);
     while(1) {
         if(1){

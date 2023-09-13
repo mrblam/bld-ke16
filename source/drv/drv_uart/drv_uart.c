@@ -7,8 +7,8 @@
 /*************************************************/
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include "drv_uart.h"
-#include "drv/drv_port/drv_port.h"
 #include "hal/hal_port/hal_port.h"
 #include "hal/hal_clock/hal_clock.h"
 #include "hal/hal_uart/hal_uart.h"
@@ -22,7 +22,7 @@ typedef struct communication{
     Drv_UART_State state;
 }communication;
 static communication s_rx;
-static call_back   rx_call_back;
+static call_back   rx_call_back = NULL;
 /*************************************************/
 void LPUART0_IRQHandler(void)
 {

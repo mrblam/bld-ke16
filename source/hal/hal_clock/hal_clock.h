@@ -12,6 +12,8 @@
 #define FISR_CLK_OPTION         3
 #define DIV1                    1
 /****************************************/
+int8_t HAL_CLOCK_PCC_CGC_Write(uint8_t module_idx,uint8_t value);
+int8_t HAL_CLOCK_PCC_PCS_Write(uint8_t module_idx,uint8_t value);
 /*
  * @brief Enable the PCC clock .
  * "param PCC_type Ptr to PCC base
@@ -39,4 +41,5 @@ int8_t HAL_CLOCK_PCC_UART_CGC_Write(uint8_t value);
  */
 int8_t HAL_CLOCK_SCG_FIRCDIV_Write(uint8_t value);
 int8_t HAL_CLOCK_PCC_PORTB_CGC_Write(uint8_t value);
+int8_t HAL_CLOCK_PCC_PORTD_CGC_Write(uint8_t value);
 #endif /* HAL_HAL_CLOCK_HAL_CLOCK_H_ */

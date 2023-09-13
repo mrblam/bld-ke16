@@ -9,22 +9,21 @@
 #define DRV_DRV_GPIO_DRV_GPIO_H_
 /******************************************/
 typedef enum LED_COLOR {
-    BLUE_LED    = BLUE_LED_PIN,
-    GREEN_LED   = GREEN_LED_PIN,
-    RED_LED     = RED_LED_PIN
+    BLUE_LED    = 1,
+    GREEN_LED   = 4,
+    RED_LED     = 5
 } LED_COLOR;
 typedef enum BUTTON {
-    SW2 = SW2_PIN,
-    SW3 = SW3_PIN
+    SW2 = 3,
+    SW3 = 2
 } BUTTON;
 typedef enum SW_STATE {
-    SW_ON,
-    SW_OFF
+    ON = 1,
+    OFF = 0
 } SW_STATE;
-typedef struct LED_t LED;
-struct LED_t{
-    LED_COLOR color;
-    uint8_t   value;
-};
+typedef void (*call_back)(void);
 /******************************************/
+uint8_t DRV_GPIO_LED_Init(LED_COLOR pin);
+uint8_t DRV_GPIO_SW_Init(BUTTON pin);
+uint8_t DRV_GPIO_register_interrup(call_back func_cb);
 #endif /* DRV_DRV_GPIO_DRV_GPIO_H_ */

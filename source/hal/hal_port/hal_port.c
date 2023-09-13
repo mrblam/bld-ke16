@@ -11,9 +11,15 @@
 /*************************************************/
 static PORT_Type *const s_portBases[] = PORT_BASE_PTRS;
 /*************************************************/
-uint8_t HAL_PORT_PCR_MUX_Write(uint8_t instance,uint8_t pin,uint8_t value){
-//    PORTB->PCR[0] = PORT_PCR_MUX(2);
-//    s_portBases[1]->PCR[0] = PORT_PCR_MUX(2);
+uint8_t HAL_PORT_PCR_MUX_Write(uint8_t instance,uint8_t pin,Mux_Control value){
     s_portBases[instance]->PCR[pin] = PORT_PCR_MUX(value);
+    return 0;
+}
+uint8_t HAL_PORT_PCR_IRQC_Write(uint8_t instance,uint8_t pin,uint8_t interrup_mode){
+    s_portBases[instance]->PCR[pin] = PORT_PCR_IRQC(interrup_mode);
+    return 0;
+}
+uint8_t HAL_PORT_ISFR_ClearIRQFlag(uint8_t instance,uint8_t pin){
+    s_portBases[instance]->ISFR = PORT_ISFR_ISF((1 << pin));
     return 0;
 }
