@@ -44,7 +44,7 @@ uint8_t DRV_GPIO_SW_Init(BUTTON pin){
     HAL_CLOCK_PCC_CGC_Write(port_idx,Enable);
     HAL_PORT_PCR_MUX_Write(port_inst,pin,Gpio);
     HAL_PORT_PCR_IRQC_Write(port_inst,pin,Falling_Edge);
-    HAL_GPIO_PDDR_Write(gpio_inst,pin,Output);
+    HAL_GPIO_PDDR_Write(gpio_inst,pin,Input);
     return 0;
 }
 uint8_t DRV_GPIO_register_interrup(call_back func_cb){

@@ -82,6 +82,8 @@ int main(void) {
     g_rx_length = sizeof(g_rx_buff);
     APP_QUEUE_Init(&queue);
     DRV_GPIO_LED_Init(RED_LED);
+    DRV_GPIO_LED_Init(GREEN_LED);
+    DRV_GPIO_LED_Init(BLUE_LED);
     DRV_GPIO_SW_Init(SW3);
     DRV_UART_Init(UART0,&g_config);
     DRV_UART_ReceivedNonBlocking(UART0,g_rx_buff,g_rx_length);
