@@ -23,15 +23,75 @@ typedef enum CMD_Code{
     undef = 0xFF
 }CMD_Code;
 /*************************************************/
-
-/*************************************************/
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_START_PROCESS(void);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB0_SetCMD(CMD_Code cmd);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB1_SetCMD(uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB2_SetCMD(uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB3_SetCMD(uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB4_SetCMD(uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB5_SetCMD(uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB6_SetCMD(uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_FLASH_FTFA_FCCOB7_SetCMD(uint8_t value);
 #endif /* HAL_HAL_FLASH_HAL_FLASH_H_ */

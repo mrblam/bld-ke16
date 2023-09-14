@@ -25,14 +25,12 @@ int8_t APP_QUEUE_Init(app_queue* queue){
 	return 0;
 }
 int8_t APP_QUEUE_EnQueue(app_queue* queue,uint8_t* value){
-//    if ((queue->front == 0 && queue->rear == queue->size-1) ||
-//            ((queue->rear+1) % queue->size == queue->front))
     if(queue->level == queue->size)
     {
-//        printf("\nQueue is Full");
+        queue->state = Queue_Full;
         return 1;
     }
-    else if (queue->front == -1) /* Insert First Element */
+    else if (queue->front == -1)
     {
     	queue->front = queue->rear = 0;
     	APP_CopyBuff(queue->data[queue->rear],value,100);
@@ -53,14 +51,12 @@ int8_t APP_QUEUE_EnQueue(app_queue* queue,uint8_t* value){
 	return 0;
 }
 uint8_t* APP_QUEUE_DeQueue(app_queue* queue){
-
+	uint8_t* data = queue->data[queue->front];
     if (queue->front == -1)
     {
-//        printf("\nQueue is Empty");
+    	queue->state = Queue_Empty;
         return 0;
     }
-    uint8_t* data = queue->data[queue->front];
-//    queue->data[queue->front] = NULL;
     if (queue->front == queue->rear)
     {
     	queue->front = -1;
@@ -78,12 +74,9 @@ uint8_t* APP_QUEUE_DeQueue(app_queue* queue){
     return data;
 }
 int8_t APP_QUEUE_CheckFull(app_queue* queue){
-//    if ((queue->front == 0 && queue->rear == queue->size-1) ||
-//            ((queue->rear+1) % queue->size == queue->front))
     if(queue->level == queue->size)
     {
-//        printf("\nQueue is Full");
-        while(1);
+    	queue->state = Queue_Full;
         return 1;
     }
     return 0;

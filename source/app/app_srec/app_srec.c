@@ -27,49 +27,38 @@ static uint8_t count_line_type(SREC *rec,uint32_t line);
 static uint8_t digit_to_hex(const char hex);
 
 /********Define Function******************/
-/* Convert line to SREC format
- *
- * @param record: line SREC type
- *        arr: arr contain one line of file SREC
- *        line: line of file present
- * @retval 1: ERROR
- *         0: NOT ERROR
- */
+
 uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
     size_t i;
     size_t data_offset;
     uint8_t checksum_c;
     if (arr[0] != 'S') {
-//        printf("Error in line %d : The first character must is 'S' \n", line);
+        printf("Error in line %d : The first character must is 'S' \n", line);
         return 1;
     }
-    /* Check for valid characters */
     for (i = 1; arr[i] != '\r' && arr[i] != '\n'; i++) {
         if (digit_to_hex(arr[i]) > 0x0F) {
-//            printf("Error in line %d : Non hexadecimal value. \n", line);
+            printf("Error in line %d : Non hexadecimal value. \n", line);
             return 1;
         }
     }
-    /* Get the record type */
     record->type = (digit_to_hex(arr[1]));
     if (line == 1 && record->type != S0) {
-//        printf("Error in line %d: Record type must be S0 in first.\n", line);
+        printf("Error in line %d: Record type must be S0 in first.\n", line);
         return 1;
     }
     if (record->type > S9) {
-//        printf("Error in line %d : Record type invalid. \n", line);
+        printf("Error in line %d : Record type invalid. \n", line);
         return 1;
     } else {
 //        if (count_line_type(record,line))
 //            return 1;
     }
-    /* Get the count field */
     record->byte_count = (digit_to_hex(arr[2]) << 4) | digit_to_hex(arr[3]);
     if (i < record->byte_count * 2 + MIN_RECORD_SIZE) {
-//        printf("Error in line %d : Byte count invalid \n", line);
+        printf("Error in line %d : Byte count invalid \n", line);
         return 1;
     }
-    /* Get the record address */
     switch (record->type) {
     case S0:
         record->address = 0;
@@ -78,33 +67,30 @@ uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
     case S1:
     case S5:
     case S9:
-        /*Four hex digits address */
         record->address = (digit_to_hex(arr[4]) << 12)
                 | (digit_to_hex(arr[5]) << 8) | (digit_to_hex(arr[6]) << 4)
                 | digit_to_hex(arr[7]);
         record->data_len = record->byte_count - 3;
         if (record->type == S9 && record->byte_count != 3){
-//            printf("Error in line %d : Byte count S9 error\n",line);
+            printf("Error in line %d : Byte count S9 error\n",line);
             return 1;
         }
         break;
     case S2:
     case S6:
     case S8:
-        /* Six hex digits address */
         record->address = (digit_to_hex(arr[4]) << 20)
                 | (digit_to_hex(arr[5]) << 16) | (digit_to_hex(arr[6]) << 12)
                 | (digit_to_hex(arr[7]) << 8) | (digit_to_hex(arr[8]) << 4)
                 | digit_to_hex(arr[9]);
         record->data_len = record->byte_count - 4;
         if (record->type == S8 && record->byte_count != 4){
-//            printf("Error in line %d : Byte count S8 error\n",line);
+            printf("Error in line %d : Byte count S8 error\n",line);
             return 1;
         }
         break;
     case S3:
     case S7:
-        /* Eight hex digits address*/
         record->address = (digit_to_hex(arr[4]) << 28)
                 | (digit_to_hex(arr[5]) << 24) | (digit_to_hex(arr[6]) << 20)
                 | (digit_to_hex(arr[7]) << 16) | (digit_to_hex(arr[8]) << 12)
@@ -112,16 +98,14 @@ uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
                 | digit_to_hex(arr[11]);
         record->data_len = record->byte_count - 5;
         if (record->type == S7 && record->byte_count != 5){
-//            printf("Error in line %d : Byte count S7 error\n",line);
+            printf("Error in line %d : Byte count S7 error\n",line);
             return 1;
         }
         break;
-        /* S4 record ignored */
     default:
-//        printf("Error in line %d : Record type invalid \n", line);
+        printf("Error in line %d : Record type invalid \n", line);
         break;
     }
-    /* Calculate checksum and copy data bytes */
     checksum_c = record->byte_count + (record->address >> 24)
             + (record->address >> 16) + (record->address >> 8)
             + (record->address & 0xff);
@@ -136,9 +120,8 @@ uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
         }
     } else if (record->type < S7) {
         if (record->type == S5 || record->type == S6) {
-            /*Check line of s1 s2 s3*/
             if (record->address != s_line_of_s1s2s3) {
-//                printf("Error in line %d: Address of S%d wrong!\n", line, record->type);
+                printf("Error in line %d: Address of S%d wrong!\n", line, record->type);
                 return 1;
             }
         }
@@ -147,10 +130,10 @@ uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
     record->check_sum = (digit_to_hex(arr[record->byte_count * 2 + 2]) << 4)
             | digit_to_hex(arr[record->byte_count * 2 + 3]);
     if (checksum_c != record->check_sum) {
-//        printf("Error in line %d : Checksum fail \n", line);
+        printf("Error in line %d : Checksum fail \n", line);
         return 1;
     }
-//    printf("Line %d is true SREC format \n", line);
+    printf("Line %d is true SREC format \n", line);
     return 0;
 }
 
@@ -187,6 +170,7 @@ uint8_t APP_GetDataSrec(SREC *record,uint8_t* buff) {
     }
     return 0;
 }
+
 /* Count line of type in file: Count and check error each line of file
  *
  * @param rec: line of SREC file
@@ -292,6 +276,8 @@ static uint8_t count_line_type(SREC *rec,uint32_t line) {
             return 1;
         }
         break;
+    default:
+    	break;
     }
     s_line_of_s1s2s3 = line_s1 + line_s2 + line_s3;
     return 0;

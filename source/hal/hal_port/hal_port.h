@@ -39,8 +39,28 @@ typedef enum {
     Mux_default = 0xff
 }Mux_Control;
 /*************************************************/
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_PORT_PCR_MUX_Write(uint8_t instance,uint8_t pin,Mux_Control value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_PORT_PCR_IRQC_Write(uint8_t instance,uint8_t pin,uint8_t value);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_PORT_ISFR_ClearIRQFlag(uint8_t instance,uint8_t pin);
 /*************************************************/
 #endif /* HAL_HAL_PORT_HAL_PORT_H_ */

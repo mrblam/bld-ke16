@@ -49,6 +49,14 @@ typedef struct uart_config{
  * @retval
  */
 status DRV_UART_Init(UART_Instance uart_instance,uart_config* config);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
+status DRV_UART_DeInit(UART_Instance uart_instance);
 /*
  * @brief This function waits for transmit to complete, disables TX and RX, and disables the UART clock.
  *  status DRV_UART_DeInit(UART_Instance uart_instance);
@@ -56,11 +64,45 @@ status DRV_UART_Init(UART_Instance uart_instance,uart_config* config);
  * @param
  * @retval
  */
-status DRV_UART_SendDataBlocking(UART_Instance uart_instance,uint8_t* data,uint16_t lengh);
-status DRV_UART_SendDataInterrup(UART_Instance uart_instance,uint8_t* data,uint16_t lengh);
-status DRV_UART_SendDataDMA(UART_Instance uart_instance,uint8_t* data,uint16_t lengh);
-status DRV_UART_ReceiveDataBlocking(UART_Instance* uart_instance,uint8_t* data,uint16_t lengh);
-status DRV_UART_ReceivedNonBlocking(UART_Instance uart_instance,uint8_t* data,uint16_t lengh);
-status DRV_UART_ReceiveDataDMA(UART_Instance uart_instance,uint8_t* data,uint16_t lengh);
+status DRV_UART_SendDataBlocking(UART_Instance uart_instance,const char* const data,uint16_t lengh);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
+status DRV_UART_SendDataInterrup(UART_Instance uart_instance,const uint8_t* const data,uint16_t lengh);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
+status DRV_UART_ReceiveDataBlocking(UART_Instance* uart_instance,const uint8_t* const data,uint16_t lengh);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
+status DRV_UART_ReceivedNonBlocking(UART_Instance uart_instance,uint8_t* const data,uint16_t lengh);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 status DRV_UART_RegisterCallback(call_back func_ptr);
+
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
+status DRV_UART_SetBaud(UART_Instance uart_instance,uint32_t baudrate);
 #endif /* DRV_DRV_UART_DRV_UART_H_ */

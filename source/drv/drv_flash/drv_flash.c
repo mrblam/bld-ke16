@@ -52,7 +52,7 @@ uint8_t DRV_FLASH_VerifyProgram(){
 
     return 0;
 }
-uint8_t DRV_FLASH_Erase(){
+uint8_t DRV_FLASH_Erase(uint32_t address,CMD_Code mode){
 
     return 0;
 }

@@ -10,8 +10,10 @@
 #include "hal_flash.h"
 /*************************************************/
 uint8_t HAL_FLASH_START_PROCESS(void){
+	__disable_irq();
     FTFA->FSTAT  = 0x80;
     while(!((FTFA->FSTAT)  & 0x80));
+    __enable_irq();
     return 0;
 }
 uint8_t HAL_FLASH_FTFA_FCCOB0_SetCMD(CMD_Code cmd){

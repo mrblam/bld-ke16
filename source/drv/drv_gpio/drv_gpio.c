@@ -38,6 +38,11 @@ uint8_t DRV_GPIO_LED_Init(LED_COLOR pin){
     HAL_GPIO_PDOR_Write(gpio_inst,pin,Disable);
     return 0;
 }
+uint8_t DRV_GPIO_LED_DeInit(void){
+    HAL_CLOCK_PCC_CGC_Write(PortD_Idx,Disable);
+    HAL_CLOCK_PCC_CGC_Write(PortB_Idx,Disable);
+	return 0;
+}
 uint8_t DRV_GPIO_LED_Control(LED_COLOR pin,uint8_t mode){
     GPIO_Instance gpio_inst;
     if(pin == BLUE_LED){
@@ -45,7 +50,11 @@ uint8_t DRV_GPIO_LED_Control(LED_COLOR pin,uint8_t mode){
     }else{
         gpio_inst = GPIOB_Inst;
     }
-    HAL_GPIO_PDOR_Write(gpio_inst,pin,mode);
+    if(mode == 2){
+    	HAL_GPIO_PTOR_Toggle(gpio_inst,pin);
+    }else{
+        HAL_GPIO_PDOR_Write(gpio_inst,pin,mode);
+    }
     return 0;
 }
 uint8_t DRV_GPIO_SW_Init(BUTTON pin){
@@ -57,6 +66,12 @@ uint8_t DRV_GPIO_SW_Init(BUTTON pin){
     HAL_PORT_PCR_IRQC_Write(port_inst,pin,Falling_Edge);
     HAL_GPIO_PDDR_Write(gpio_inst,pin,Input);
     return 0;
+}
+uint8_t DRV_GPIO_SW_DeInit(void){
+	HAL_CLOCK_PCC_CGC_Write(PortD_Idx,Disable);
+	HAL_PORT_PCR_IRQC_Write(PortD,SW2,Disable_Interrup);
+	HAL_PORT_PCR_IRQC_Write(PortD,SW3,Disable_Interrup);
+	return 0;
 }
 uint8_t DRV_GPIO_SW_ReadState(BUTTON pin){
     GPIO_Instance gpio_inst = GPIOD_Inst;

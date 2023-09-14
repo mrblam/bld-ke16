@@ -31,3 +31,8 @@ uint32_t HAL_GPIO_PDIR_Read(uint8_t instance, uint8_t pin)
 {
     return (((uint32_t) (s_gpioBases[instance]->PDIR) >> pin) & 0x01UL);
 }
+int8_t HAL_GPIO_PTOR_Toggle(uint8_t instance,uint8_t pin)
+{
+	s_gpioBases[instance]->PTOR |= (uint32_t) (1UL << pin);
+	return 1;
+}

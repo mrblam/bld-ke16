@@ -22,6 +22,7 @@ typedef enum GPIO_Instance{
     GPIO_default = 0xff
 }GPIO_Instance;
 typedef enum {
+	Disable_Interrup = 0x0U,
     Logic_Low = 0x8U,
     Rising_Edge = 0x9U,
     Falling_Edge = 0xAU,
@@ -29,6 +30,12 @@ typedef enum {
     Logic_High = 0xCU
 }Pin_Interrup;
 /****************************************/
+/*
+ * @brief
+ * @param
+ * @param
+ * @retval
+ */
 uint8_t HAL_GPIO_PDDR_Write(uint8_t instance,uint8_t pin, uint8_t mode);
 
 /*
@@ -59,5 +66,5 @@ uint32_t HAL_GPIO_PDIR_Read(uint8_t instance,uint8_t pin);
  * @param base GPIO peripheral base pointer (GPIOA, GPIOB, GPIOC, and so on.)
  * @param mask GPIO pin number macro
  */
-int8_t HAL_GPIO_PTOR_Toggle(uint8_t instance,uint8_t pin, uint8_t mode);
+int8_t HAL_GPIO_PTOR_Toggle(uint8_t instance,uint8_t pin);
 #endif /* HAL_HAL_GPIO_HAL_GPIO_H_ */
