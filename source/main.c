@@ -57,11 +57,11 @@ uint8_t boot_process(void)
                 APP_QUEUE_EnQueue(&queue, g_rx_buff);
             }
         g_is_new_line = false;
-        g_is_new_line = false;
     }
     if(queue.level == 1){
         strcpy((char*)buff, (char*)APP_QUEUE_DeQueue(&queue));
         if(APP_CheckSrecLine(&record, buff, s_line)){
+            DRV_UART_SendDataBlocking(UART0, "Error!!!", 8);
             while(1);
         }else{
             if (record.type == S1 || record.type == S2 || record.type == S3){
@@ -76,7 +76,8 @@ uint8_t boot_process(void)
     }
     if(g_is_finish == true){
     	boot_state = Boot_State_Success;
-    	DRV_UART_SendDataBlocking(UART0, "Boot Success", 12);
+    	DRV_UART_SendDataBlocking(UART0, "Boot Success!!!", 15);
+    	DRV_UART_SendDataBlocking(UART0, "Press Reset Button To Jump Application", 38);
     	g_is_user_app = true;
     }
     return 0;
@@ -104,6 +105,7 @@ int main(void) {
         	APP_QUEUE_Init(&queue);
             DRV_UART_Init(UART0,&g_config);
             DRV_UART_ReceivedNonBlocking(UART0,g_rx_buff,sizeof(g_rx_buff));
+            DRV_UART_SendDataBlocking(UART0, "Boot Starting!!!", 16);
             boot_state = Boot_State_Process;
         	break;
         case Boot_State_Process:

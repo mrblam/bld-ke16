@@ -116,9 +116,10 @@ status DRV_UART_SetBaud(UART_Instance uart_instance,uint32_t baudrate){
 	    }
 	}
 #endif
-    HAL_UART_BAUD_SBR_Write(uart_instance, 78);//312//78
+    HAL_UART_BAUD_SBR_Write(uart_instance, 0x1aU);//312//78
     HAL_UART_BAUD_OSR_Write(uart_instance, 15);//15//15
 	return success;
 }
+//(26;15)
 
 

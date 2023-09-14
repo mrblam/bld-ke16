@@ -16,8 +16,6 @@ uint8_t queue3[100];
 uint8_t queue4[100];
 uint8_t* queue_data[4] = {queue1,queue2,queue3,queue4};
 /*******************************************************/
-static void APP_CopyBuff(uint8_t* des,uint8_t* src,uint8_t length);
-/*******************************************************/
 int8_t APP_QUEUE_Init(app_queue* queue){
     queue->front = queue->rear = -1;
     queue->size = 4;
@@ -33,7 +31,7 @@ int8_t APP_QUEUE_EnQueue(app_queue* queue,uint8_t* value){
     else if (queue->front == -1)
     {
     	queue->front = queue->rear = 0;
-    	APP_CopyBuff(queue->data[queue->rear],value,100);
+    	strcpy((char*)queue->data[queue->rear],(char*)value);
     	queue->level++;
     }
     else if (queue->rear == queue->size-1 && queue->front != 0)
@@ -80,9 +78,4 @@ int8_t APP_QUEUE_CheckFull(app_queue* queue){
         return 1;
     }
     return 0;
-}
-static void APP_CopyBuff(uint8_t* des,uint8_t* src,uint8_t length){
-    for(uint8_t i = 0;i < length;i++){
-        des[i] = src[i];
-    }
 }
