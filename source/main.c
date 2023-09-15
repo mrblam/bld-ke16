@@ -4,6 +4,7 @@
  *  Created on: Sep 10, 2023
  *      Author: hoanpx
  */
+/*************************************************/
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -15,12 +16,12 @@
 #include "app/app_srec/app_srec.h"
 #include "boot/boot.h"
 /*************************************************/
+#define USER_APP			(0xA000u)
+/*************************************************/
 void UART0_IRQHandler_Callback(void);
 /*************************************************/
-
-/*************************************************/
 uint8_t 			g_rx_buff[100];
-uint8_t				g_rx_length;
+//uint8_t				g_rx_length;
 bool    			g_is_new_line = false;
 bool				g_is_finish = false;
 bool    			g_is_user_app = false;
@@ -32,7 +33,7 @@ Boot_State  		boot_state = Boot_State_Idle;
 uart_config	g_config = {
         .is_DMA = false,
         .is_IRQ = true,
-        .baud = 38400,
+        .baud = 115200,
         .parity = 0,
         .dataLength = 8,
         .enableRX = true,
@@ -62,6 +63,7 @@ uint8_t boot_process(void)
         strcpy((char*)buff, (char*)APP_QUEUE_DeQueue(&queue));
         if(APP_CheckSrecLine(&record, buff, s_line)){
             DRV_UART_SendDataBlocking(UART0, "Error!!!", 8);
+            DRV_UART_SendDataBlocking(UART0, "Please Press Reset Button!", 26);
             while(1);
         }else{
             if (record.type == S1 || record.type == S2 || record.type == S3){
@@ -112,10 +114,11 @@ int main(void) {
             boot_process();
         	break;
         case Boot_State_Success:
+        	DRV_GPIO_LED_Control(BLUE_LED,OFF);
             DRV_GPIO_LED_DeInit();
             DRV_GPIO_SW_DeInit();
             DRV_UART_DeInit(UART0);
-            boot_jump_to_app(0xa000);
+            boot_jump_to_app(USER_APP);
         	break;
         default:
         	break;

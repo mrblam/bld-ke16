@@ -2,7 +2,7 @@
  * drv_systick.c
  *
  *  Created on: Aug 26, 2023
- *      Author: PV
+ *      Author: hoanpx
  */
 /*************************************************/
 #include <stdint.h>

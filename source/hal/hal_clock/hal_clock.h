@@ -2,7 +2,7 @@
  * hal_clock.h
  *
  *  Created on: Aug 27, 2023
- *      Author: PV
+ *      Author: hoanpx
  */
 
 #ifndef HAL_HAL_CLOCK_HAL_CLOCK_H_

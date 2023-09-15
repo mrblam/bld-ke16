@@ -59,12 +59,13 @@ typedef struct SREC_t {
  * 			0: NOT_ERR
  */
 uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line);
-/*
- * @brief
- * @param
- * @param
- * @retval
- */
+
+/* Write data to file
+ *
+ * @param file: pointer point to file
+ *        record: pointer to SREC type
+ * @retval 0
+ * */
 uint8_t APP_GetDataSrec(SREC *record,uint8_t* buff);
 /*
  *

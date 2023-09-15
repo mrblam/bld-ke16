@@ -23,7 +23,21 @@ uint8_t line_s8 = 0;
 uint8_t line_s9 = 0;
 uint32_t s_line_of_s1s2s3 = 0;
 /***************Decalre Static Functon******************/
+/* Count line of type in file: Count and check error each line of file
+ *
+ * @param rec: line of SREC file
+ *
+ * @retval 1 if error
+ *         0 if success
+ * */
 static uint8_t count_line_type(SREC *rec,uint32_t line);
+
+/* Convert an ascii hex character
+ *
+ * @param hex: digit type char
+ *
+ * @retval hexa value
+ * */
 static uint8_t digit_to_hex(const char hex);
 
 /********Define Function******************/
@@ -51,8 +65,8 @@ uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
         printf("Error in line %d : Record type invalid. \n", line);
         return 1;
     } else {
-//        if (count_line_type(record,line))
-//            return 1;
+        if (count_line_type(record,line))
+            return 1;
     }
     record->byte_count = (digit_to_hex(arr[2]) << 4) | digit_to_hex(arr[3]);
     if (i < record->byte_count * 2 + MIN_RECORD_SIZE) {
@@ -137,12 +151,6 @@ uint8_t APP_CheckSrecLine(SREC *record, uint8_t *arr, uint32_t line) {
     return 0;
 }
 
-/* Convert an ascii hex character
- *
- * @param hex: digit type char
- *
- * @retval hexa value
- * */
 uint8_t digit_to_hex(const char hex) {
     if (hex >= '0' && hex <= '9')
         return hex - '0';
@@ -154,15 +162,8 @@ uint8_t digit_to_hex(const char hex) {
         return 0xff;
 }
 
-/* Write data to file
- *
- * @param file: pointer point to file
- *        record: pointer to SREC type
- * @retval 0
- * */
 uint8_t APP_GetDataSrec(SREC *record,uint8_t* buff) {
     uint32_t i;
-    /*Wrire data of S1 or S2 or S3 */
     if (record->type == S1 || record->type == S2 || record->type == S3) {
         for (i = 0; (i < record->data_len); i++) {
             buff[i] = record->data[i];
@@ -171,13 +172,6 @@ uint8_t APP_GetDataSrec(SREC *record,uint8_t* buff) {
     return 0;
 }
 
-/* Count line of type in file: Count and check error each line of file
- *
- * @param rec: line of SREC file
- *
- * @retval 1 if error
- *         0 if success
- * */
 static uint8_t count_line_type(SREC *rec,uint32_t line) {
     switch (rec->type) {
     case S0:
@@ -282,6 +276,4 @@ static uint8_t count_line_type(SREC *rec,uint32_t line) {
     s_line_of_s1s2s3 = line_s1 + line_s2 + line_s3;
     return 0;
 }
-
-
 

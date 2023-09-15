@@ -43,18 +43,18 @@ typedef struct uart_config{
 }uart_config;
 /*************************************************/
 /*
- * @brief
- * @param
- * @param
- * @retval
+ * @brief Init UARTx module
+ * @param uart_instance
+ * @param confid
+ * @retval status
  */
 status DRV_UART_Init(UART_Instance uart_instance,uart_config* config);
 
 /*
- * @brief
+ * @brief DeInit UARTx module
+ * @param uart_instance
  * @param
- * @param
- * @retval
+ * @retval status
  */
 status DRV_UART_DeInit(UART_Instance uart_instance);
 /*

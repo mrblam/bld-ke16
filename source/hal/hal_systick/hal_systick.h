@@ -2,7 +2,7 @@
  * hal_systick.h
  *
  *  Created on: Aug 27, 2023
- *      Author: PV
+ *      Author: hoanpx
  */
 
 #ifndef HAL_HAL_SYSTICK_HAL_SYSTICK_H_

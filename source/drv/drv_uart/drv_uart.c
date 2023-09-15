@@ -95,7 +95,7 @@ status DRV_UART_SendDataBlocking(UART_Instance uart_instance,const char* const d
     return success;
 }
 status DRV_UART_SetBaud(UART_Instance uart_instance,uint32_t baudrate){
-#if 0
+#if 1
 	uint8_t	 osrValue = 0U;
 	uint8_t	 osrTemp = 0U;
 	uint16_t sbrValue = 0U;
@@ -103,7 +103,7 @@ status DRV_UART_SetBaud(UART_Instance uart_instance,uint32_t baudrate){
 	uint32_t baudTemp = 0U;
 	uint32_t baudDiff = baudrate;
 	uint32_t tempDiff = 0U;
-	for (osrTemp = 4U; osrTemp < 32U; osrTemp++)
+	for (osrTemp = 8U; osrTemp < 32U; osrTemp++)
 	{
 	    sbrTemp = (uint16_t)(CLK_SRC/(baudrate*(osrTemp + 1)));
 	    baudTemp = (CLK_SRC/((sbrTemp)*(osrTemp + 1)));
@@ -116,10 +116,9 @@ status DRV_UART_SetBaud(UART_Instance uart_instance,uint32_t baudrate){
 	    }
 	}
 #endif
-    HAL_UART_BAUD_SBR_Write(uart_instance, 0x1aU);//312//78
-    HAL_UART_BAUD_OSR_Write(uart_instance, 15);//15//15
+    HAL_UART_BAUD_OSR_Write(uart_instance, osrValue);
+    HAL_UART_BAUD_SBR_Write(uart_instance, sbrValue);
 	return success;
 }
-//(26;15)
 
 

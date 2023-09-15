@@ -9,7 +9,7 @@
 #include "hal/hal_flash/hal_flash.h"
 #include "drv_flash.h"
 /*************************************************/
-uint8_t DRV_FLASH_SetCMD(CMD_Code cmd){
+uint8_t DRV_FLASH_SetCMD(FLASH_CMD_Code cmd){
     HAL_FLASH_FTFA_FCCOB0_SetCMD(cmd);
     return 0;
 }
@@ -48,15 +48,17 @@ uint8_t DRV_FLASH_Program(uint32_t address,uint8_t* data,uint32_t length){
     }
     return 0;
 }
-uint8_t DRV_FLASH_VerifyProgram(){
+uint8_t DRV_FLASH_VerifyProgram(uint32_t address,uint8_t* data,uint32_t length){
 
     return 0;
 }
-uint8_t DRV_FLASH_Erase(uint32_t address,CMD_Code mode){
-
+uint8_t DRV_FLASH_Erase(uint32_t address,FLASH_CMD_Code mode){
+    DRV_FLASH_SetCMD(mode);
+    DRV_FLASH_SetAddress(address);
+    HAL_FLASH_START_PROCESS();
     return 0;
 }
-uint8_t DRV_FLASH_VerifyErase(){
+uint8_t DRV_FLASH_VerifyErase(uint32_t address,FLASH_CMD_Code mode){
 
     return 0;
 }

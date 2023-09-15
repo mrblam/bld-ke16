@@ -16,7 +16,7 @@ uint8_t HAL_FLASH_START_PROCESS(void){
     __enable_irq();
     return 0;
 }
-uint8_t HAL_FLASH_FTFA_FCCOB0_SetCMD(CMD_Code cmd){
+uint8_t HAL_FLASH_FTFA_FCCOB0_SetCMD(uint8_t cmd){
     FTFA->FCCOB0 = cmd;
     return 0;
 }

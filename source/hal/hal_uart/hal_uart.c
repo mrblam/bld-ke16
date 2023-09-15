@@ -13,11 +13,12 @@ const IRQn_Type s_lpuartIRQ[] = LPUART_RX_TX_IRQS;
 static LPUART_Type* const s_lpuartBases[] = LPUART_BASE_PTRS;
 /*************************************************/
 int8_t HAL_UART_BAUD_SBR_Write(uint8_t instance,uint16_t value){
+	s_lpuartBases[instance]->BAUD &= ~LPUART_BAUD_SBR_MASK;
     s_lpuartBases[instance]->BAUD |= LPUART_BAUD_SBR(value);
     return 0;
 }
 int8_t HAL_UART_BAUD_OSR_Write(uint8_t instance,uint8_t value){
-    s_lpuartBases[instance]->BAUD |= LPUART_BAUD_OSR(value);
+    s_lpuartBases[instance]->BAUD = LPUART_BAUD_OSR(value);
     return 0;
 }
 int8_t HAL_UART_CTRL_RE_Write(uint8_t instance,uint8_t value){
