@@ -52,13 +52,33 @@ uint8_t DRV_FLASH_VerifyProgram(uint32_t address,uint8_t* data,uint32_t length){
 
     return 0;
 }
-uint8_t DRV_FLASH_Erase(uint32_t address,FLASH_CMD_Code mode){
-    DRV_FLASH_SetCMD(mode);
+uint8_t DRV_FLASH_EraseSector(uint32_t address){
+	HAL_FLASH_FTFA_FCCOB0_SetCMD(Erase_Flash_Sector);
     DRV_FLASH_SetAddress(address);
     HAL_FLASH_START_PROCESS();
     return 0;
 }
-uint8_t DRV_FLASH_VerifyErase(uint32_t address,FLASH_CMD_Code mode){
-
+uint8_t DRV_FLASH_EraseMultiSector(uint32_t address,uint8_t num){
+	uint8_t i;
+	for(i = 0;i < num;i++){
+		DRV_FLASH_EraseSector(address + (uint32_t)(i*1024));
+	}
+    return 0;
+}
+uint8_t DRV_FLASH_EraseAllBlocks(void){
+	HAL_FLASH_FTFA_FCCOB0_SetCMD(Erase_All_Blocks_Unsecure);
+    HAL_FLASH_START_PROCESS();
+	return 0;
+}
+uint8_t DRV_FLASH_VerifyEraseSector(uint32_t address){
+	HAL_FLASH_FTFA_FCCOB0_SetCMD(Read_1s_Section);
+    DRV_FLASH_SetAddress(address);
+//    DRV_FLASH_PrepareDATA(data);
+    HAL_FLASH_START_PROCESS();
+    return 0;
+}
+uint8_t DRV_FLASH_VerifyEraseAllBlocks(void){
+	HAL_FLASH_FTFA_FCCOB0_SetCMD(Read_1s_All_Blocks);
+    HAL_FLASH_START_PROCESS();
     return 0;
 }

@@ -25,6 +25,9 @@ typedef enum CMD_Code{
 /*************************************************/
 uint8_t DRV_FLASH_Program(uint32_t address,uint8_t* data,uint32_t length);
 uint8_t DRV_FLASH_VerifyProgram(uint32_t address,uint8_t* data,uint32_t length);
-uint8_t DRV_FLASH_Erase(uint32_t address,FLASH_CMD_Code mode);
-uint8_t DRV_FLASH_VerifyErase(uint32_t address,FLASH_CMD_Code mode);
+uint8_t DRV_FLASH_EraseSector(uint32_t address);
+uint8_t DRV_FLASH_EraseMultiSector(uint32_t address,uint8_t num);
+uint8_t DRV_FLASH_EraseAllBlocks(void);
+uint8_t DRV_FLASH_VerifyEraseSector(uint32_t address);
+uint8_t DRV_FLASH_VerifyEraseAllBlocks(void);
 #endif /* DRV_DRV_FLASH_DRV_FLASH_H_ */

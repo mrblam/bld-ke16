@@ -11,8 +11,8 @@
 /*************************************************/
 uint8_t HAL_FLASH_START_PROCESS(void){
 	__disable_irq();
-    FTFA->FSTAT  = 0x80;
-    while(!((FTFA->FSTAT)  & 0x80));
+    FTFA->FSTAT  = FTFA_FSTAT_CCIF_MASK;
+    while(!((FTFA->FSTAT)  & FTFA_FSTAT_CCIF_MASK));
     __enable_irq();
     return 0;
 }

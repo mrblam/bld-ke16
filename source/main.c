@@ -107,6 +107,7 @@ int main(void) {
         	APP_QUEUE_Init(&queue);
             DRV_UART_Init(UART0,&g_config);
             DRV_UART_ReceivedNonBlocking(UART0,g_rx_buff,sizeof(g_rx_buff));
+        	DRV_FLASH_EraseMultiSector(USER_APP,5);
             DRV_UART_SendDataBlocking(UART0, "Boot Starting!!!", 16);
             boot_state = Boot_State_Process;
         	break;
